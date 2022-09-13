@@ -21,8 +21,10 @@ import pjconf as pjc
 config = pjc.load_config('config.json')
 
 # or, load a configuration file with an optional default set of configuration elsewhere
-config = pjc.load_config('config.json', 'defaults.json')
+config = pjc.load_config('defaults.json', 'config.json', ignore_missing=True)
 ```
+
+Configuration files are loaded in a cascading sequence, multiple positional filepaths are loaded and override/update the previous keys. Setting `ignore_missing=True` will allow for a flexible resolve of optional configuration; disabling it will raise a `FileNotFoundError` on the first file it can't find.
 
 Accessing configuration uses a ``get()`` method, with a cool dot-recursive syntax, optional defaults and runtime type-casting.
 

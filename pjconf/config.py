@@ -1,4 +1,5 @@
 """Object for handling configuration."""
+import os
 import json
 
 class Config:
@@ -9,26 +10,33 @@ class Config:
         self._config = dict()
 
 
-    def load(self, filepath, defaults_filepath=None):
-        """Load configuration from a JSON filepath.
+    def load(self, *filepaths, ignore_missing=False):
+        """Load configuration from one or more filepaths.
 
         Args:
-            filepath (str): Path to the configuration file.
-            defaults_filepath (str, optional): Path to the defaults (these are loaded first then overridden with filepath). Defaults to None.
-        """
+            *filepaths (str) : Filepaths for loading.
+            ignore_missing (bool, optional): Ignore missing files. Defaults to True.
 
+        Raises:
+            FileNotFoundError: When a filepath doesn't exist and ignore_missing=False.
+            ValueError: When the supplied filepaths result in an empty configuration object.
+        """
+        
         _config = dict()
 
-        # Load the defaults filepath if requested
-        if defaults_filepath:
-            _defaults = json.load(open(defaults_filepath, 'r')) 
-            _config.update(_defaults)
+        for filepath in filepaths:
+            
+            if os.path.isfile(filepath):
+                __config = json.load(open(filepath, 'r'))
+                _config.update(__config)
+            
+            elif ignore_missing != True:
+                raise FileNotFoundError(f'File {filepath} not found. Add ignore_missing=True to skip loading.')
 
-        # Load the requested filepath and overlay
-        _user = json.load(open(filepath, 'r'))
-        _config.update(_user)
+        # Empty config?
+        if _config == False:
+            raise ValueError('Supplied filepaths result in empty configuration.')
 
-        # Set to the internal object.
         self._config = _config
 
 

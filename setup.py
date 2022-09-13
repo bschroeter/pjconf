@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='pjconf',
-    version='0.1.0',
+    version='1.0.0',
     author='Ben Schroeter',
     description='A super simple JSON based configuration system.',
     long_description=long_description,
@@ -19,5 +19,7 @@ setup(
     py_modules='pjconf',
     install_requires=[],
     keywords=['configuration', 'config', 'json'],
-    url='https://github.com/bschroeter/pjconf'
+    url='https://github.com/bschroeter/pjconf',
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
 )

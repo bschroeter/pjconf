@@ -1,0 +1,9 @@
+{
+    "opt1": true,
+    "opt2": 1.0,
+    "opt3": {
+        "subopt1": false,
+        "subopt2": 0,
+        "subopt3": "red"
+    }
+}
